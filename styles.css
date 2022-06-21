@@ -6,6 +6,7 @@ svg		{border:1px #eee solid;}
 body{
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    margin-bottom: 20px;
 }
 
 
@@ -26,6 +27,7 @@ header{
 h1{
     font-weight: 200; 
     font-size: 4rem;
+    line-height: 3.5rem;
 }
 
 
