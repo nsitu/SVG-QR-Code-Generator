@@ -10,11 +10,6 @@ body{
 }
 
 
-input{ 
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    min-width: 50vw;
-}
 
 header{
     
@@ -41,9 +36,14 @@ form{
     padding: 1rem;
 }
 
-input{
+
+input{ 
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    min-width: 30vw;
     padding: 10px 20px;
 }
+
 button{
     padding: 10px 20px;
 
@@ -55,4 +55,11 @@ button{
 
 #downloadArea{
     display: none;
+}
+
+@media (max-width: 800px) { 
+    
+input{   
+    min-width: 50vw; 
+}
 }
