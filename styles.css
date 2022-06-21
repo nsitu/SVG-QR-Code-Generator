@@ -62,6 +62,9 @@ button{
 
 @media (max-width: 800px) { 
     
+    label{
+        text-align: left;
+    }
 input{   
     min-width: 50vw; 
 }
