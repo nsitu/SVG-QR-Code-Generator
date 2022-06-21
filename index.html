@@ -17,11 +17,10 @@
 	<header>
 		<h1>QR <span>Generator</span></h1>
 		<h4>Create a Quick Response code.<br/>Save to SVG.</h4>
-		<form id="urlForm" onsubmit="return generateQRCode();">
-			<label for="url">Enter a URL:</label>
+		<form id="urlForm" onsubmit="return generateQRCode();"> 
 
 			<input type="url" name="url" id="url"
-		placeholder="https://example.com"
+		placeholder="Enter URL (e.g. https://example.com)"
 		pattern="https://.*" 
 		required>
 			<button>GO</button>
