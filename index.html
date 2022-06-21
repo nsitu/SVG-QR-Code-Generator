@@ -33,7 +33,12 @@
 
 	
 	<div id="downloadArea">
-		<button onclick="downloadSVG();">Download SVG</button>
+		<button id="downloadSVG" onclick="downloadSVG();">Download SVG</button>
+		<button id="downloadPNG" onclick="downloadPNG();">Download PNG</button>
+	</div>
+
+	<div id="canvasArea">
+		<canvas id="canvas"></canvas>
 	</div>
 
 <script>
@@ -59,37 +64,80 @@
 				,vrb   :   0
 			});
 
-			outputArea.appendChild(theQRCode);
-
-			downloadArea.style.display = 'block';
-
-
+			outputArea.appendChild(theQRCode); 
+			downloadArea.style.display = 'block'; 
 			return false;
 		}
 
 
- 
-		function downloadSVG(){ 
-
+		function makeFileName(){
 			let url = document.querySelector("#url").value;
-			let svg =  document.querySelector('svg');
+			return sanitizeURL(url); 
+		}
 
-			let svgData = svg.outerHTML;
-
+				
+		function sanitizeURL(url){
 			/* remove non alphanumeric characters from url */
 			/* use underscores instead */
 			url = url.split('://').pop(); 
-			let iconName = url.replace(/[^a-z0-9]/gi, '_'); 
+			return url.replace(/[^a-z0-9]/gi, '_'); 
+		}
 
+
+
+		function downloadSVG(){ 
+			let svg =  document.querySelector('svg'); 
+			let svgData = svg.outerHTML; 
+			let fileName = makeFileName(); 	 
 			let svgBlob = new Blob([svgData], {type:"image/svg+xml;charset=utf-8"});
 			let svgUrl = URL.createObjectURL(svgBlob);
 			let downloadLink = document.createElement("a");
 			downloadLink.href = svgUrl;
-			downloadLink.download = iconName +".svg";
+			downloadLink.download = fileName +".svg";
 			document.body.appendChild(downloadLink);
 			downloadLink.click();
 			document.body.removeChild(downloadLink); 
 		}
+
+		function downloadPNG(){
+			let svg =  document.querySelector('svg'); 
+			let canvas = document.getElementById('canvas');
+			canvas.width  = 2048;
+			canvas.height = 2048;
+			let ctx = canvas.getContext('2d');
+			let data = (new XMLSerializer()).serializeToString( svg );
+			let DOMURL = window.URL || window.webkitURL || window;
+			let img = new Image();
+			let svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+			let url = DOMURL.createObjectURL(svgBlob);
+
+			img.onload = function () {
+				ctx.drawImage(img, 0, 0, canvas.width, canvas.height );
+				DOMURL.revokeObjectURL(url);
+
+				let imgURI = canvas
+					.toDataURL('image/png')
+					.replace('image/png', 'image/octet-stream'); 
+								
+				let fileName = makeFileName();
+				let a = document.createElement('a');
+				a.setAttribute('download', fileName+'.png');
+				a.setAttribute('href', imgURI);
+				a.setAttribute('target', '_blank');
+
+				document.body.appendChild(a);
+				a.click();
+				document.body.removeChild(a);  
+
+			};
+
+			img.src = url;
+
+		}
+
+
+ 
+ 
 
 
 
