@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Adapted from https://github.com/datalog/qrcode-svg   -->
+	<meta charset="utf-8"/>
+	
+	<link rel="stylesheet" href="styles.css"> 
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;900&display=swap" rel="stylesheet">
+
+	<script src="qrcode.min.js"></script>
+</head>
+<body>
+	<header>
+		<h1>QR Generator</h1>
+		<h4>Create a Quick Response code. Save it as an SVG file.</h4>
+		<form id="urlForm" onsubmit="return generateQRCode();">
+			<label for="url">Enter a URL:</label>
+
+			<input type="url" name="url" id="url"
+		placeholder="https://example.com"
+		pattern="https://.*" size="40"
+		required>
+			<button>GO</button>
+		</form>
+	</header>
+
+	<div id="outputArea">
+
+	</div>
+
+	
+	<div id="downloadArea">
+		<button onclick="downloadSVG();">Download SVG</button>
+	</div>
+
+<script>
+
+
+
+	'use strict';
+ 
+
+		function generateQRCode(){  
+
+			let downloadArea = document.querySelector("#downloadArea"); 
+
+			let outputArea = document.querySelector("#outputArea"); 
+			outputArea.innerHTML = ''; 
+			let theQRCode = new QRCode({
+				msg   :  document.querySelector("#url").value
+				,dim   :   256
+				,pad   :   4
+				,mtx   :  -1
+				,ecl   :  "H"
+				,ecb   :   1
+				,vrb   :   0
+			});
+
+			outputArea.appendChild(theQRCode);
+
+			downloadArea.style.display = 'block';
+
+
+			return false;
+		}
+
+
+ 
+		function downloadSVG(){ 
+
+			let url = document.querySelector("#url").value;
+			let svg =  document.querySelector('svg');
+
+			let svgData = svg.outerHTML;
+
+			/* remove non alphanumeric characters from url */
+			/* use underscores instead */
+			url = url.split('://').pop(); 
+			let iconName = url.replace(/[^a-z0-9]/gi, '_'); 
+
+			let svgBlob = new Blob([svgData], {type:"image/svg+xml;charset=utf-8"});
+			let svgUrl = URL.createObjectURL(svgBlob);
+			let downloadLink = document.createElement("a");
+			downloadLink.href = svgUrl;
+			downloadLink.download = iconName +".svg";
+			document.body.appendChild(downloadLink);
+			downloadLink.click();
+			document.body.removeChild(downloadLink); 
+		}
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

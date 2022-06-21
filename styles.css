@@ -1,0 +1,55 @@
+
+
+*		{padding:0; margin:0;}
+svg		{border:1px #eee solid;}
+
+body{
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+input{ 
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+header{
+    
+    color: #fff;
+    background: rgb(142,29,88);
+    background: linear-gradient(90deg, rgba(142,29,88,1) 0%, rgba(242,139,32,1) 35%, rgba(236,0,140,1) 100%);
+    
+    padding: 1rem;
+}
+h1{
+    font-weight: 200; 
+    font-size: 4rem;
+}
+
+
+h4{
+    font-weight: 900; 
+    font-size: 1rem;
+}
+  
+
+form{ 
+    padding: 1rem;
+}
+
+input{
+    padding: 10px 20px;
+}
+button{
+    padding: 10px 20px;
+
+}
+
+#outputArea{
+    margin: 20px;
+}
+
+#downloadArea{
+    display: none;
+}
